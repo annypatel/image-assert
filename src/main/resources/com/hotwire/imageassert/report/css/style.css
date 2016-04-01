@@ -1,0 +1,38 @@
+img {
+  width: 33%;
+}
+
+img.rotate {
+  image-orientation: 90deg;
+}
+
+div.left {
+  float: left;
+  font-family: arial, sans-serif;
+  font-size: 14px;
+  width: 20%;
+}
+
+div.left div {
+  padding-left: 2%;
+  padding-top: .5%;
+  padding-bottom: .5%;
+}
+
+div.right {
+  float: right;
+  padding: 0.25%;
+  width: 79.5%;
+}
+
+div.match {
+  background-color: lightgreen;
+}
+
+div.threshold {
+  background-color: burlywood;
+}
+
+div.mismatch {
+  background-color: lightcoral;
+}
