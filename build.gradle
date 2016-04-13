@@ -2,27 +2,23 @@ apply plugin: 'com.github.ben-manes.versions'
 
 buildscript {
     repositories {
-        maven {
-            url 'http://nexus01.hotwire.com:8081/nexus/content/groups/public/'
-        }
+        jcenter()
     }
     dependencies {
         classpath 'com.github.ben-manes:gradle-versions-plugin:0.12.0'
-        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:1.0.0"
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:1.0.1-2"
     }
 }
 
 repositories {
-    maven {
-        url 'http://nexus01.hotwire.com:8081/nexus/content/groups/public/'
-    }
+    jcenter()
 }
 
 apply plugin: 'java'
 apply plugin: 'kotlin'
 
 dependencies {
-    compile "org.jetbrains.kotlin:kotlin-stdlib:1.0.0"
+    compile "org.jetbrains.kotlin:kotlin-stdlib:1.0.1-2"
     compile 'commons-io:commons-io:2.4'
     compile 'com.google.code.gson:gson:2.6.2'
     testCompile 'junit:junit:4.12'
