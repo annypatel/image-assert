@@ -14,7 +14,6 @@ repositories {
     jcenter()
 }
 
-apply plugin: 'java'
 apply plugin: 'kotlin'
 
 dependencies {
