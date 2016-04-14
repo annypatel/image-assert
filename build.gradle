@@ -1,24 +1,68 @@
-apply plugin: 'com.github.ben-manes.versions'
-
 buildscript {
     repositories {
         jcenter()
     }
     dependencies {
-        classpath 'com.github.ben-manes:gradle-versions-plugin:0.12.0'
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:1.0.1-2"
     }
 }
 
-repositories {
-    jcenter()
+plugins {
+    id "com.github.ben-manes.versions" version "0.12.0"
+    id "maven"
+    id "maven-publish"
 }
 
 apply plugin: 'kotlin'
+
+repositories {
+    jcenter()
+}
 
 dependencies {
     compile "org.jetbrains.kotlin:kotlin-stdlib:1.0.1-2"
     compile 'commons-io:commons-io:2.4'
     compile 'com.google.code.gson:gson:2.6.2'
     testCompile 'junit:junit:4.12'
+}
+
+task sourceJar(type: Jar) {
+    from sourceSets.main.allSource
+}
+
+publishing {
+    publications {
+        MavenLocal(MavenPublication) {
+            from components.java
+            artifactId 'image-assert'
+            groupId 'com.hotwire.image-assert'
+            version '1.0.1'
+            artifact sourceJar {
+                classifier "sources"
+            }
+            pom.withXml() {
+                def root = asNode()
+                root.appendNode('packaging', 'jar')
+                root.appendNode('name', 'Image assertion library')
+                root.appendNode('description', 'Image assertion library brings image comparison into automated testing.')
+                root.appendNode('url', 'https://github.com/HotwireDotCom/image-assert')
+                def scm = root.appendNode('scm')
+                scm.appendNode('url', 'https://github.com/HotwireDotCom/image-assert')
+                scm.appendNode('connection', 'scm:https://github.com/HotwireDotCom/image-assert.git')
+                scm.appendNode('developerConnection', 'scm:git://github.com/HotwireDotCom/image-assert.git')
+                def license = root.appendNode('licenses').appendNode('license')
+                license.appendNode('name', 'The MIT License (MIT)')
+                license.appendNode('url', 'http://www.opensource.org/licenses/MIT')
+                license.appendNode('distribution', 'repo')
+                def developer = root.appendNode('developers').appendNode('developer')
+                developer.appendNode('name', 'Dmitry Berezhnoy')
+                developer.appendNode('email', 'deadmoto@gmail.com')
+            }
+        }
+    }
+    repositories {
+        maven {
+            url "$buildDir/publishing"
+        }
+    }
 }
