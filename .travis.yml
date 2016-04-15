@@ -17,4 +17,5 @@ deploy:
     key:
         secure: DZ7+Riwg4rX+CaClbyR3odEUeUpZNVC3lM8AlFuyNg5hYgP1/6npgzrEHljzLxMzQyrxWsc7TYAJjicFBYQKq++jpiDZUi7QQhVc8+VNLmlXwLCaQhXpKd0p+7yJhP1irF2ZGP6YoBqqaTI85zXVNzDZ94NbExNoNn5torGaPhT8X2inM82wwme2anwyTL2/IjjczOrGIFrWpKEWClIV1T28/62ocF6x2qTnZ+xgnPK5qVzg1OL/EYBICRrftcskRbP4VDsOH535JIVkan7O2YRTPeEN0HVxgveSUKY2po5ZAyJluKpeWl5avQVw3kh+tPO8x7GLHqHiLiKxJaqgZBzuIVIz2uXcwkhq2ZKjJX5ysFzfQdn8cvvnkyOr3pSGEL+hYhkhVG6sYv8//dVKaqqTyrEQLJ3F5L76cQsftd+teX3BurGvzaYCNyqx6+SH8/BOGLXf8WQenecCiR+8BstLW0iiMADwIsiglRwHPLKjM3NQTuikUcsRNnnd0BqO6qtvmwBdJqRN31D91aW3LaLSrvjbt4HzDXQ60POMSyzFZHwC79H7q7utxL4h57GBRyM+0mTPc5DjcNeij8yN4nU/Y/5nGlnP7nJXPcClcRJw2bsttBnXOB5/G1zs7YsNwthuJorAHMSb4x3uUyTh2Fv9j0JjVbTjgwKNNovx0Do=
     on:
+        all_branches: false
         tags: true
