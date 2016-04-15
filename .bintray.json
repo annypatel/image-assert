@@ -1,0 +1,23 @@
+{
+  "package": {
+    "subject": "hotwiredotcom",
+    "repo": "maven",
+    "name": "image-assert",
+    "desc": "Image comparison library",
+    "website_url": "https://github.com/HotwireDotCom/image-assert",
+    "vcs_url": "https://github.com/HotwireDotCom/image-assert.git",
+    "licenses": [
+      "MIT"
+    ]
+  },
+  "version": {
+    "name": "1.0.0"
+  },
+  "files": [
+    {
+      "includePattern": "build/publishing/com/hotwire/image-assert/image-assert/(.*)/(.*)",
+      "uploadPattern": "$2"
+    }
+  ],
+  "publish": true
+}
