@@ -11,12 +11,12 @@
     ]
   },
   "version": {
-    "name": "1.0.0"
+    "name": "1.0.1"
   },
   "files": [
     {
-      "includePattern": "build/publishing/com/hotwire/image-assert/image-assert/(.*)/(.*)",
-      "uploadPattern": "$2"
+      "includePattern": "build/publishing/(.*)",
+      "uploadPattern": "$1"
     }
   ],
   "publish": true

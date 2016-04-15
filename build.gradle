@@ -11,7 +11,6 @@ plugins {
     id "com.github.ben-manes.versions" version "0.12.0"
     id "maven"
     id "maven-publish"
-    id "com.jfrog.bintray" version "1.6"
 }
 
 apply plugin: 'kotlin'
@@ -37,9 +36,27 @@ publishing {
             from components.java
             artifactId 'image-assert'
             groupId 'com.hotwire.image-assert'
-            version '1.0.0'
+            version '1.0.1'
             artifact sourceJar {
                 classifier "sources"
+            }
+            pom.withXml() {
+                def root = asNode()
+                root.appendNode('packaging', 'jar')
+                root.appendNode('name', 'Image assertion library')
+                root.appendNode('description', 'Image assertion library brings image comparison into automated testing.')
+                root.appendNode('url', 'https://github.com/HotwireDotCom/image-assert')
+                def scm = root.appendNode('scm')
+                scm.appendNode('url', 'https://github.com/HotwireDotCom/image-assert')
+                scm.appendNode('connection', 'scm:https://github.com/HotwireDotCom/image-assert.git')
+                scm.appendNode('developerConnection', 'scm:git://github.com/HotwireDotCom/image-assert.git')
+                def license = root.appendNode('licenses').appendNode('license')
+                license.appendNode('name', 'The MIT License (MIT)')
+                license.appendNode('url', 'http://www.opensource.org/licenses/MIT')
+                license.appendNode('distribution', 'repo')
+                def developer = root.appendNode('developers').appendNode('developer')
+                developer.appendNode('name', 'Dmitry Berezhnoy')
+                developer.appendNode('email', 'deadmoto@gmail.com')
             }
         }
     }
