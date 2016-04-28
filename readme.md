@@ -1,3 +1,6 @@
+[![Build Status](https://travis-ci.org/HotwireDotCom/image-assert.svg?branch=develop)](https://travis-ci.org/HotwireDotCom/image-assert)
+[![Download](https://api.bintray.com/packages/hotwiredotcom/maven/image-assert/images/download.svg)](https://bintray.com/hotwiredotcom/maven/image-assert/_latestVersion)
+
 #### System requirements
 
 ImageMagick 6.9.0+ must be installed and added to PATH variable

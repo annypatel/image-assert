@@ -28,10 +28,10 @@ package com.hotwire.imageassert.report
 import com.google.gson.Gson
 import com.hotwire.imageassert.listener.Result
 import com.hotwire.imageassert.listener.ResultListener
-import org.apache.commons.io.FileUtils
 import java.io.File
 import java.io.IOException
-import java.util.*
+import java.util.ArrayList
+import java.util.HashMap
 
 /**
  * Collect results and produce HTML report.
@@ -44,7 +44,7 @@ class HTMLReportResultListener(val outputDir: File) : ResultListener {
     fun extractResource(name: String, outputDir: File) {
         val inputStream = HTMLReportResultListener::class.java.getResourceAsStream(name)
         try {
-            FileUtils.copyInputStreamToFile(inputStream, outputDir)
+            outputDir.writeBytes(inputStream.readBytes());
         } finally {
             inputStream.close()
         }
@@ -75,7 +75,7 @@ class HTMLReportResultListener(val outputDir: File) : ResultListener {
     fun saveReport() {
         try {
             val json = Gson().toJson(results).replace(outputDir.absolutePath.toRegex(), ".")
-            FileUtils.writeStringToFile(File(outputDir, "report.json"), json)
+            File(outputDir, "report.json").writeBytes(json.toByteArray())
             extractResource("index.html", File(outputDir, "index.html"))
             extractResource("css/style.css", File(outputDir, "css/style.css"))
             extractResource("js/engine.js", File(outputDir, "js/engine.js"))
