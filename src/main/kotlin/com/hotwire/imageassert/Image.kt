@@ -25,10 +25,16 @@
 
 package com.hotwire.imageassert
 
-import org.apache.commons.io.IOUtils
-import java.io.*
+import java.io.File
+import java.io.FileInputStream
+import java.io.FileNotFoundException
+import java.io.FileOutputStream
+import java.io.IOException
+import java.io.InputStream
+import java.io.OutputStream
 
 class Image private constructor(private val bytes: ByteArray) {
+
     fun save(target: OutputStream) {
         bytes.inputStream().copyTo(target)
     }
@@ -65,8 +71,7 @@ class Image private constructor(private val bytes: ByteArray) {
 
         @JvmStatic fun load(source: InputStream): Image {
             try {
-                val bytes = ByteArray(source.available())
-                IOUtils.readFully(source, bytes)
+                val bytes = source.readBytes(source.available())
                 return Image(bytes)
             } catch (e: IOException) {
                 throw RuntimeException("Failed to copy stream!", e)
