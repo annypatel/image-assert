@@ -5,6 +5,21 @@
 
 ImageMagick 6.9.0+ must be installed and added to PATH variable
 
+#### Dependencies
+
+###### Maven
+```
+<dependency>
+	<groupId>com.hotwire.image-assert</groupId>
+	<artifactId>image-assert</artifactId>
+	<version>1.0.2</version>
+</dependency>
+```
+###### Gradle
+```
+'com.hotwire.image-assert:image-assert:1.0.2'
+```
+
 #### Usage
 
 Approach and syntax are similar to FEST-Assert library.
