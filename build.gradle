@@ -3,8 +3,8 @@ buildscript {
         jcenter()
     }
     dependencies {
-        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:1.0.1-2"
-        classpath "org.jetbrains.dokka:dokka-gradle-plugin:0.9.7"
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:1.0.2"
+        classpath "org.jetbrains.dokka:dokka-gradle-plugin:0.9.8"
     }
 }
 
@@ -22,7 +22,7 @@ repositories {
 }
 
 dependencies {
-    compile "org.jetbrains.kotlin:kotlin-stdlib:1.0.1-2"
+    compile "org.jetbrains.kotlin:kotlin-stdlib:1.0.2"
     compile 'com.google.code.gson:gson:2.6.2'
     testCompile 'junit:junit:4.12'
 }
@@ -43,7 +43,7 @@ publishing {
             from components.java
             artifactId 'image-assert'
             groupId 'com.hotwire.image-assert'
-            version '1.0.2'
+            version '1.0.3'
             artifact(sourceJar) {
                 classifier "sources"
             }
