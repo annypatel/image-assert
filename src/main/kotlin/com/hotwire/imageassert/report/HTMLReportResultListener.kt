@@ -72,16 +72,15 @@ class HTMLReportResultListener(val outputDir: File) : ResultListener {
         results.add(map)
     }
 
-    fun saveReport() {
-        try {
-            val json = Gson().toJson(results).replace(outputDir.absolutePath.toRegex(), ".")
-            File(outputDir, "report.json").writeBytes(json.toByteArray())
-            extractResource("index.html", File(outputDir, "index.html"))
-            extractResource("css/style.css", File(outputDir, "css/style.css"))
-            extractResource("js/engine.js", File(outputDir, "js/engine.js"))
-            extractResource("js/jquery-1.11.3.min.js", File(outputDir, "js/jquery-1.11.3.min.js"))
-        } catch (e: IOException) {
-            throw RuntimeException(e)
-        }
+    fun saveReport() = try {
+        if (!outputDir.exists() && !outputDir.mkdirs()) throw IOException("Could not create directory $outputDir!")
+        val json = Gson().toJson(results).replace(outputDir.absolutePath.toRegex(), ".")
+        File(outputDir, "report.json").writeBytes(json.toByteArray())
+        extractResource("index.html", File(outputDir, "index.html"))
+        extractResource("css/style.css", File(outputDir, "css/style.css"))
+        extractResource("js/engine.js", File(outputDir, "js/engine.js"))
+        extractResource("js/jquery-1.11.3.min.js", File(outputDir, "js/jquery-1.11.3.min.js"))
+    } catch (e: IOException) {
+        throw RuntimeException(e)
     }
 }
