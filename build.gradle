@@ -43,7 +43,7 @@ publishing {
             from components.java
             artifactId 'image-assert'
             groupId 'com.hotwire.image-assert'
-            version '1.0.4'
+            version '1.0.5'
             artifact(sourceJar) {
                 classifier "sources"
             }

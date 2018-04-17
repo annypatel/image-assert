@@ -3,7 +3,7 @@
 
 #### System requirements
 
-ImageMagick 6.9.0+ must be installed and added to PATH variable
+ImageMagick 7.0.7+ must be installed and added to PATH variable
 
 #### Dependencies
 
@@ -12,12 +12,12 @@ ImageMagick 6.9.0+ must be installed and added to PATH variable
 <dependency>
 	<groupId>com.hotwire.image-assert</groupId>
 	<artifactId>image-assert</artifactId>
-	<version>1.0.4</version>
+	<version>1.0.5</version>
 </dependency>
 ```
 ###### Gradle
 ```
-'com.hotwire.image-assert:image-assert:1.0.4'
+'com.hotwire.image-assert:image-assert:1.0.5'
 ```
 
 #### Usage
