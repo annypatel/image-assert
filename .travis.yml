@@ -1,7 +1,7 @@
 dist: trusty
 before_script:
     - sudo apt-get update -q
-    - sudo apt-get install imagemagick=7.0.7-28
+    - sudo apt-get install ImageMagick=7.0.7-28
     - convert -version
 language: java
 after_failure:
