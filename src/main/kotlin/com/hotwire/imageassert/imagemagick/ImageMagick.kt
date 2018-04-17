@@ -27,7 +27,12 @@ package com.hotwire.imageassert.imagemagick
 
 import com.hotwire.imageassert.Image
 import com.hotwire.imageassert.Rectangle
-import java.io.*
+import java.io.BufferedReader
+import java.io.ByteArrayOutputStream
+import java.io.IOException
+import java.io.InputStream
+import java.io.InputStreamReader
+import java.io.OutputStream
 import java.util.logging.Logger
 
 fun start(vararg command: String): Process {
@@ -85,8 +90,8 @@ object ImageMagick {
      * @return Result instance containing diff image and difference in pixels.
      */
     fun compare(actual: Image, expected: Image): Result {
-        val process = start("compare", "-define", "stream:buffer-size=0", "-fuzz", "17%", "-metric", "AE", "png:-", "png:-", "png:-")
-        write(process.outputStream, actual, expected)
+        val process = start("magick", "compare", "-define", "stream:buffer-size=0", "-fuzz", "17%", "-metric", "AE", "miff:-", "png:-")
+        write(process.outputStream, convertToMiff(actual), convertToMiff(expected))
 
         val asyncTaskPool = AsyncTaskPool()
         val imageByteArray = ByteArrayOutputStream()
@@ -110,8 +115,8 @@ object ImageMagick {
      * Copy alpha-channel.
      */
     fun copyOpacity(image: Image, mask: Image): Image {
-        val process = start("convert", "-define", "stream:buffer-size=0", "png:-", "png:-", "-alpha", "off", "-compose", "copy-opacity", "-composite", "png:-")
-        write(process.outputStream, image, mask)
+        val process = start("magick", "-define", "stream:buffer-size=0", "miff:-", "-alpha", "off", "-compose", "copy-opacity", "-composite", "png:-")
+        write(process.outputStream, convertToMiff(image), convertToMiff(mask))
         val bytes = AsyncReader.read(process.inputStream)
         val output = read(process.errorStream)
         wait(process)
@@ -124,7 +129,7 @@ object ImageMagick {
      * Fill image with solid color.
      */
     fun fill(source: Image): Image {
-        val process = start("convert", "-", "-fill", "white", "-colorize", "100%", "-")
+        val process = start("magick", "-", "-fill", "white", "-colorize", "100%", "-")
         write(process.outputStream, source)
         val output = read(process.errorStream)
         if (output != null) {
@@ -138,7 +143,7 @@ object ImageMagick {
      */
     fun rectangle(source: Image, rectangle: Rectangle): Image {
         val format = "rectangle %d,%d %d,%d".format(rectangle.x, rectangle.y, rectangle.x + rectangle.width, rectangle.y + rectangle.height)
-        val process = start("convert", "-", "-fill", "black", "-draw", format, "-")
+        val process = start("magick", "-", "-fill", "black", "-draw", format, "-")
         write(process.outputStream, source)
         val output = read(process.errorStream)
         if (output != null) {
@@ -151,8 +156,23 @@ object ImageMagick {
      * Remove alpha-channel.
      */
     fun removeAlpha(file: Image): Image {
-        val process = start("convert", "png:-", "-alpha", "off", "png:-")
+        val process = start("magick", "png:-", "-alpha", "off", "png:-")
         write(process.outputStream, file)
+        val bytes = AsyncReader.read(process.inputStream)
+        val output = read(process.errorStream)
+        if (output != null) {
+            LOGGER.finest(output)
+        }
+        return Image.load(bytes)
+    }
+
+
+    /**
+     * Convert png to Magic Image File Format - ImageMagick's input stream doesn't support reading morethan one png files
+     */
+    fun convertToMiff(source: Image): Image {
+        val process = start("magick", "convert", "-",  "miff:-")
+        write(process.outputStream, source)
         val bytes = AsyncReader.read(process.inputStream)
         val output = read(process.errorStream)
         if (output != null) {
