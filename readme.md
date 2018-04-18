@@ -3,7 +3,7 @@
 
 #### System requirements
 
-ImageMagick 7.0.7+ must be installed and added to PATH variable
+ImageMagick 6.9.0+ must be installed and added to PATH variable
 
 #### Dependencies
 
