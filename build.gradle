@@ -12,6 +12,7 @@ plugins {
     id "com.github.ben-manes.versions" version "0.17.0"
     id "maven"
     id "maven-publish"
+    id "signing"
 }
 
 apply plugin: 'kotlin'
@@ -41,8 +42,8 @@ publishing {
     publications {
         MavenLocal(MavenPublication) {
             from components.java
-            artifactId 'image-assert'
-            groupId 'com.hotwire.image-assert'
+            artifactId 'image-assert-im7'
+            groupId 'com.github.annypatel.image-assert'
             version = '1.0.5'
             artifact(sourceJar) {
                 classifier "sources"
@@ -53,24 +54,65 @@ publishing {
                 root.appendNode('packaging', 'jar')
                 root.appendNode('name', 'Image assertion library')
                 root.appendNode('description', 'Image assertion library brings image comparison into automated testing.')
-                root.appendNode('url', 'https://github.com/HotwireDotCom/image-assert')
+                root.appendNode('url', 'https://github.com/annypatel/image-assert')
                 def scm = root.appendNode('scm')
-                scm.appendNode('url', 'https://github.com/HotwireDotCom/image-assert')
-                scm.appendNode('connection', 'scm:https://github.com/HotwireDotCom/image-assert.git')
-                scm.appendNode('developerConnection', 'scm:git://github.com/HotwireDotCom/image-assert.git')
+                scm.appendNode('url', 'https://github.com/annypatel/image-assert')
+                scm.appendNode('connection', 'scm:https://github.com/annypatel/image-assert.git')
+                scm.appendNode('developerConnection', 'scm:git://github.com/annypatel/image-assert.git')
                 def license = root.appendNode('licenses').appendNode('license')
                 license.appendNode('name', 'The MIT License (MIT)')
                 license.appendNode('url', 'http://www.opensource.org/licenses/MIT')
                 license.appendNode('distribution', 'repo')
                 def developer = root.appendNode('developers').appendNode('developer')
-                developer.appendNode('name', 'Dmitry Berezhnoy')
-                developer.appendNode('email', 'deadmoto@gmail.com')
+                developer.appendNode('name', 'Anny Patel')
+                developer.appendNode('email', '')
             }
         }
     }
     repositories {
         maven {
-            url "$buildDir/publishing"
+            name 'snapshot'
+            url getSnapshotRepositoryUrl()
+            credentials {
+                username = getRepositoryUsername()
+                password = getRepositoryPassword()
+            }
+        }
+        maven {
+            name 'release'
+            url getReleaseRepositoryUrl()
+            credentials {
+                username = getRepositoryUsername()
+                password = getRepositoryPassword()
+            }
         }
     }
+}
+
+signing {
+    required { isReleaseBuild() }
+    sign publishing.publications.MavenLocal
+}
+
+def isReleaseBuild() {
+    def version = publishing.publications.MavenLocal.version
+    return !version.contains("SNAPSHOT")
+}
+
+def getReleaseRepositoryUrl() {
+    return hasProperty('RELEASE_REPOSITORY_URL') ? RELEASE_REPOSITORY_URL
+            : "https://oss.sonatype.org/service/local/staging/deploy/maven2/"
+}
+
+def getSnapshotRepositoryUrl() {
+    return hasProperty('SNAPSHOT_REPOSITORY_URL') ? SNAPSHOT_REPOSITORY_URL
+            : "https://oss.sonatype.org/content/repositories/snapshots/"
+}
+
+def getRepositoryUsername() {
+    return hasProperty('SONATYPE_NEXUS_USERNAME') ? SONATYPE_NEXUS_USERNAME : ""
+}
+
+def getRepositoryPassword() {
+    return hasProperty('SONATYPE_NEXUS_PASSWORD') ? SONATYPE_NEXUS_PASSWORD : ""
 }
