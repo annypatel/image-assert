@@ -1,23 +1,24 @@
+<!--
 [![Build Status](https://travis-ci.org/HotwireDotCom/image-assert.svg?branch=develop)](https://travis-ci.org/HotwireDotCom/image-assert)
 [![Download](https://api.bintray.com/packages/hotwiredotcom/maven/image-assert/images/download.svg)](https://bintray.com/hotwiredotcom/maven/image-assert/_latestVersion)
-
+-->
 #### System requirements
 
-ImageMagick 6.9.0+ must be installed and added to PATH variable
+ImageMagick 7+ must be installed and added to PATH variable
 
 #### Dependencies
 
 ###### Maven
 ```
 <dependency>
-	<groupId>com.hotwire.image-assert</groupId>
-	<artifactId>image-assert</artifactId>
-	<version>1.0.5</version>
+	<groupId>com.github.annypatel.image-assert</groupId>
+	<artifactId>image-assert-im7</artifactId>
+	<version>1.0.6</version>
 </dependency>
 ```
 ###### Gradle
 ```
-'com.hotwire.image-assert:image-assert:1.0.5'
+'com.github.annypatel.image-assert:image-assert-im7:1.0.6'
 ```
 
 #### Usage
